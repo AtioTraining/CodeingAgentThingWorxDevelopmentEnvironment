@@ -1,0 +1,63 @@
+const fs = require('fs');
+const path = require('path');
+
+// Load config
+const envPath = path.join(__dirname, '.env.example');
+const envContent = fs.readFileSync(envPath, 'utf8');
+const config = {};
+envContent.split('\n').forEach(line => {
+    const [key, value] = line.split('=');
+    if (key && value) config[key.trim()] = value.trim();
+});
+
+const BASE_URL = config.THINGWORX_BASE_URL;
+const APP_KEY = config.THINGWORX_APP_KEY;
+
+async function inspect() {
+    console.log(`Inspecting EntityServices for 'Mashup' services...`);
+
+    const response = await fetch(`${BASE_URL}/Resources/EntityServices/ServiceDefinitions`, {
+        method: 'GET',
+        headers: {
+            'appKey': APP_KEY,
+            'Accept': 'application/json'
+        }
+    });
+
+    if (!response.ok) {
+        console.error(`Failed to inspect: ${response.status} ${response.statusText}`);
+    } else {
+        const data = await response.json();
+        if (data.rows) {
+            console.log("Services containing 'Mashup':");
+            data.rows.forEach(row => {
+                if (row.name.includes("Mashup")) {
+                    console.log(row.name);
+                }
+            });
+        }
+    }
+
+    console.log("\nInspecting Resources...");
+    const resResponse = await fetch(`${BASE_URL}/Resources`, {
+        method: 'GET',
+        headers: {
+            'appKey': APP_KEY,
+            'Accept': 'application/json'
+        }
+    });
+
+    if (resResponse.ok) {
+        const data = await resResponse.json();
+        if (data.rows) {
+            console.log("Resources containing 'Mashup':");
+            data.rows.forEach(row => {
+                if (row.name.includes("Mashup")) {
+                    console.log(row.name);
+                }
+            });
+        }
+    }
+}
+
+inspect();
