@@ -36,6 +36,9 @@ Here is a list of commonly used widgets:
 | **Date Time Picker** | `ptcsdatetimepicker` | Select date and time. | Filtering by date range, scheduling. |
 | **Tabs** | `ptcstabs` | Organizes content into selectable views. | Categorizing complex information. |
 | **Responsive Container** | `flexcontainer` | Flex-based container for responsive layouts. | **Required for modern mashups**. |
+| **Numeric Input** | `numericentry` | Legacy numeric input (lowercase). | Input numbers. **Requires explicit width/height**. |
+| **Radio Button** | `ptcsradio` | Modern radio button. | Single choice selection. |
+| **Toggle Button** | `ptcstogglebutton` | On/Off switch. | Boolean settings, enabling features. |
 
 ### ⚠️ Critical: Modern Widget Types
 **Always use the modern `ptcs*` widget types** (e.g., `ptcslabel`, `ptcsbutton`) instead of legacy types (e.g., `Label`, `Button`). The legacy widgets may not render correctly in newer ThingWorx versions.
@@ -77,3 +80,7 @@ Layouts are crucial for structure. Common patterns include:
 ### Benefits
 *   **Maintainability**: Change the menu item in one place (the Master), and it updates everywhere.
 *   **User Experience**: Users get a seamless experience as the frame (header/nav) stays stable while the content area transitions.
+
+## Detailed Widget Recipes
+
+For specific configurations of tricky widgets like **Numeric Input** and **Radio Buttons**, please refer to [Widget Recipes](widget_recipes.md).

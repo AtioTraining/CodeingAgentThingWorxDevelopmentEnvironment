@@ -884,3 +884,92 @@ async function createMashup() {
 
 createMashup();
 ```
+
+## Recipe 4: Border Layout (Holy Grail)
+
+This recipe implements a classic "Holy Grail" or "Border Layout": Header, Footer, Left Sidebar, Right Sidebar, and a flexible Center content area.
+
+### Purpose
+*   **Full Application Layout**: Typical dashboard structure.
+*   **Nested Flex Stacks**: Uses a vertical stack for the main structure (Header / Middle / Footer) and a horizontal stack for the middle section (Left / Center / Right).
+*   **Fixed Dimension Containers**: Demonstrates locking height for headers/footers and width for sidebars.
+
+### Structure
+```mermaid
+graph TD
+    Root[Root FlexContainer<br/>Column] --> Top[Top Container<br/>Fixed Height 100px]
+    Root --> Middle[Middle Row<br/>Flexible Row]
+    Root --> Bottom[Bottom Container<br/>Fixed Height 100px]
+    
+    Middle --> Left[Left Sidebar<br/>Fixed Width 100px]
+    Middle --> Center[Center Content<br/>Flexible Column]
+    Middle --> Right[Right Sidebar<br/>Fixed Width 100px]
+```
+
+### Key JSON Properties
+
+#### 1. Header/Footer (Fixed Height)
+To fix vertical height, use `MinHeight`, `MaxHeight`, and matching flex properties.
+```javascript
+{
+    "Properties": {
+        "Type": "flexcontainer",
+        "ResponsiveLayout": false,
+        "Height": 100,
+        "MinHeight": 100,
+        "MaxHeight": 100,
+        "flex-grow": 0,
+        "flex-shrink": 0,
+        "flex-basis": "100px",
+        "flex-min-height": "100px",
+        "flex-max-height": "100px"
+    },
+    "Widgets": []
+}
+```
+
+#### 2. Sidebars (Fixed Width)
+Same concept but using Width properties.
+```javascript
+{
+    "Properties": {
+        "Type": "flexcontainer",
+        "ResponsiveLayout": false,
+        "Width": 100,
+        "MinWidth": 100,
+        "MaxWidth": 100,
+        "flex-grow": 0,
+        "flex-shrink": 0,
+        "flex-basis": "100px",
+        "flex-min-width": "100px",
+        "flex-max-width": "100px"
+    },
+    "Widgets": []
+}
+```
+
+## Recipe 5: Using a Master Mashup
+
+You can assign a **Master Mashup** to your new Mashup to inherit common header, footer, or navigation elements.
+
+### Usage
+To specify a Master Mashup, add the `"Master"` property to the root `UI` -> `Properties` object in your JSON definition.
+
+### JSON Snippet
+```javascript
+"UI": {
+    "Properties": {
+        "Id": "mashup-root",
+        "Type": "mashup",
+        "ResponsiveLayout": true,
+        "Title": "My Mashup with Master",
+        // ... other properties ...
+        "Master": "antigravity.Master-mm" // Add this line!
+    },
+    "Widgets": [ ... ]
+}
+```
+
+### Important Notes
+*   **Name Validation**: Ensure the Master Mashup name (`antigravity.Master-mm` in the example) exists on the server *before* you create your child mashup, otherwise creation might fail or the mashup will be broken.
+*   **Layout Inheritance**: Your mashup's content will be injected into the `Content` placeholder of the Master Mashup.
