@@ -1,0 +1,153 @@
+{
+  "UI": {
+    "Properties": {
+      "Id": "mashup-root",
+      "Type": "mashup",
+      "ResponsiveLayout": true,
+      "Width": 1024,
+      "Height": 618,
+      "Style": "DefaultMashupStyle",
+      "StyleTheme": "PTC Convergence Theme",
+      "Title": "Parameter Test Mashup",
+      "Area": "Mashup",
+      "__TypeDisplayName": "Mashup",
+      "Visible": true,
+      "Z-index": 10,
+      "Top": 0,
+      "Left": 0,
+      "EnableParameterEditing": true,
+      "DisplayName": "mashup-root",
+      "UseMasterTheme": false,
+      "MinWidth": 0,
+      "MinHeight": 0,
+      "IgnoreWarningsInViewMashup": false,
+      "TitleBar": false,
+      "TitleBarText": "Gadget-Titel hier",
+      "MashupToEditGadget": "DefaultMashupToEditGadget",
+      "Columns": 0,
+      "Rows": 0,
+      "TitleBarStyle": "DefaultTitleBarStyle",
+      "AddToDashboardButtonStyle": "DefaultAddToDashboardButtonStyle",
+      "ConfigureGadgetButtonStyle": "DefaultConfigureGadgetButtonStyle",
+      "AddToDashboardButton": "SimplePlus",
+      "ConfigureGadgetButton": "SimpleGear",
+      "BGImage": "",
+      "BGImageRepeat": "no-repeat",
+      "BGImageSize": "auto",
+      "IsPrintLayout": false,
+      "UseTheme": false,
+      "ShowDataLoading": true,
+      "_currentParameterDefs": [
+        {
+          "ParameterName": "EingabeZahl",
+          "BaseType": "INTEGER",
+          "Description": "Testzahl",
+          "Aspects": {
+            "bindingDirection": "BOTH",
+            "isMandatory": false,
+            "isLocalProperty": true
+          }
+        },
+        {
+          "ParameterName": "TestText",
+          "BaseType": "STRING",
+          "Description": "",
+          "Aspects": {
+            "bindingDirection": "SOURCE",
+            "isMandatory": false
+          }
+        },
+        {
+          "ParameterName": "TestBool",
+          "BaseType": "BOOLEAN",
+          "Description": "",
+          "Aspects": {
+            "bindingDirection": "TARGET",
+            "isMandatory": false
+          }
+        }
+      ]
+    },
+    "Widgets": [
+      {
+        "Properties": {
+          "Type": "flexcontainer",
+          "__TypeDisplayName": "Responsive Container",
+          "Id": "flexcontainer-root",
+          "DisplayName": "root-container",
+          "flex-direction": "column",
+          "align-items": "center",
+          "justify-content": "center",
+          "flex-grow": 1,
+          "ResponsiveLayout": true,
+          "LastContainer": true,
+          "Area": "UI",
+          "userCannotRemove": true,
+          "UseTheme": false,
+          "StyleProperties": {},
+          "SourceURL": "",
+          "Style": "DefaultContainerStyle",
+          "flex-min-width": "",
+          "flex-min-height": "",
+          "flex-max-width": "",
+          "flex-max-height": "",
+          "flex-wrap": "nowrap",
+          "align-content": "flex-start",
+          "flex-shrink": 1,
+          "flex-basis": "auto",
+          "flex-size": "default",
+          "positioning": "responsive",
+          "EnableExpandCollapse": false,
+          "Expanded": true,
+          "ShowExpandCollapseTab": false,
+          "ExpandCollapseTabLocation": "inside",
+          "Overlay": false,
+          "ShowDataLoading": true,
+          "Visible": true,
+          "Z-index": 10,
+          "iconClass": "widgets-flexcontainer"
+        },
+        "Widgets": []
+      }
+    ]
+  },
+  "Data": {
+    "Session": {
+      "DataName": "Session",
+      "EntityName": "",
+      "EntityType": "Session",
+      "Id": "session",
+      "Services": [
+        {
+          "Id": "SessionInterface",
+          "Name": "GetGlobalSessionValues",
+          "Characteristic": "Services",
+          "Target": "GetGlobalSessionValues",
+          "APIMethod": "post",
+          "RefreshInterval": 0,
+          "Parameters": {}
+        }
+      ]
+    },
+    "UserExtensions": {
+      "DataName": "UserExtensions",
+      "EntityName": "",
+      "EntityType": "UserExtensions",
+      "Id": "UserExtensions",
+      "Services": [
+        {
+          "Id": "UserExtensionInterface",
+          "Name": "GetCurrentUserExtensionProperties",
+          "Characteristic": "Services",
+          "Target": "GetCurrentUserExtensionProperties",
+          "APIMethod": "post",
+          "RefreshInterval": 0,
+          "Parameters": {}
+        }
+      ]
+    }
+  },
+  "Events": [],
+  "DataBindings": [],
+  "mashupType": "mashup"
+}

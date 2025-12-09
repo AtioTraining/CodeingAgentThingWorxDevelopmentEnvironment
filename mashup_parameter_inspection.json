@@ -1,0 +1,226 @@
+{
+  "owner": {
+    "name": "fachpack2024",
+    "type": "User"
+  },
+  "preview": "",
+  "visibilityPermissions": {
+    "Visibility": []
+  },
+  "lastModifiedDate": 1765284026402,
+  "columns": 0,
+  "parameterDefinitions": {
+    "TestText": {
+      "name": "TestText",
+      "aspects": {
+        "isRequired": false,
+        "isBindingSource": "true",
+        "defaultValue": "",
+        "isBindingTarget": "false",
+        "friendlyName": "Test Text"
+      },
+      "description": "Test Text Parameter",
+      "baseType": "STRING",
+      "ordinal": 1
+    },
+    "EingabeZahl": {
+      "name": "EingabeZahl",
+      "aspects": {
+        "isRequired": false,
+        "isBindingSource": "true",
+        "defaultValue": 0,
+        "isBindingTarget": "true",
+        "friendlyName": "Eingabe Zahl"
+      },
+      "description": "Testzahl",
+      "baseType": "INTEGER",
+      "ordinal": 0
+    },
+    "TestBool": {
+      "name": "TestBool",
+      "aspects": {
+        "isRequired": false,
+        "isBindingSource": "false",
+        "defaultValue": false,
+        "isBindingTarget": "true",
+        "friendlyName": "Test Bool"
+      },
+      "description": "Test Boolean Parameter",
+      "baseType": "BOOLEAN",
+      "ordinal": 2
+    }
+  },
+  "aspects": {
+    "isResponsive": true,
+    "isFlex": "true",
+    "mashupType": "mashup"
+  },
+  "designTimePermissions": {
+    "Read": [],
+    "Delete": [],
+    "Create": [],
+    "Metadata": [],
+    "Update": []
+  },
+  "description": "Mashup with custom parameters for testing",
+  "homeMashup": "",
+  "avatar": "",
+  "rows": 0,
+  "tags": [],
+  "mashupContent": "{\"UI\":{\"Properties\":{\"Id\":\"mashup-root\",\"Type\":\"mashup\",\"ResponsiveLayout\":true,\"Width\":1024,\"Height\":618,\"Style\":\"DefaultMashupStyle\",\"StyleTheme\":\"PTC Convergence Theme\",\"Title\":\"Parameter Test Mashup\",\"Area\":\"Mashup\",\"__TypeDisplayName\":\"Mashup\",\"Visible\":true,\"Z-index\":10,\"Top\":0,\"Left\":0,\"EnableParameterEditing\":true},\"Widgets\":[{\"Properties\":{\"Type\":\"flexcontainer\",\"__TypeDisplayName\":\"Responsive Container\",\"Id\":\"flexcontainer-root\",\"DisplayName\":\"root-container\",\"flex-direction\":\"column\",\"align-items\":\"center\",\"justify-content\":\"center\",\"flex-grow\":1,\"ResponsiveLayout\":true,\"LastContainer\":true},\"Widgets\":[]}]},\"Data\":{\"Session\":{\"DataName\":\"Session\",\"EntityName\":\"\",\"EntityType\":\"Session\",\"Id\":\"session\",\"Services\":[{\"Id\":\"SessionInterface\",\"Name\":\"GetGlobalSessionValues\",\"Characteristic\":\"Services\",\"Target\":\"GetGlobalSessionValues\",\"APIMethod\":\"post\",\"RefreshInterval\":0,\"Parameters\":{}}]},\"UserExtensions\":{\"DataName\":\"UserExtensions\",\"EntityName\":\"\",\"EntityType\":\"UserExtensions\",\"Id\":\"UserExtensions\",\"Services\":[{\"Id\":\"UserExtensionInterface\",\"Name\":\"GetCurrentUserExtensionProperties\",\"Characteristic\":\"Services\",\"Target\":\"GetCurrentUserExtensionProperties\",\"APIMethod\":\"post\",\"RefreshInterval\":0,\"Parameters\":{}}]}},\"Events\":[],\"DataBindings\":[],\"mashupType\":\"mashup\"}",
+  "thingTemplates": [],
+  "runTimePermissions": {
+    "permissions": [
+      {
+        "EventSubscribe": [],
+        "PropertyWrite": [],
+        "PropertyRead": [],
+        "ServiceInvoke": [],
+        "resourceName": "*",
+        "EventInvoke": []
+      }
+    ]
+  },
+  "documentationContent": "",
+  "thingShapes": [],
+  "name": "antigravity.parameter-test-mu",
+  "things": [],
+  "configurationTableDefinitions": {},
+  "projectName": "PTCDefaultProject",
+  "configurationTables": {
+    "MobileSettings": {
+      "isMultiRow": false,
+      "name": "MobileSettings",
+      "description": "Mashup Mobile Settings",
+      "rows": [
+        {
+          "initialScale": 1,
+          "heightType": "device-height",
+          "fullScreenMode": true,
+          "minimumScale": 0.1,
+          "disableZoom": false,
+          "iosStatusBarAppearance": "black-translucent",
+          "width": "device-width",
+          "maximumScale": 10,
+          "iosShortcutIconTitle": "",
+          "widthType": "device-width",
+          "height": "device-height"
+        }
+      ],
+      "dataShapeName": "",
+      "ordinal": 0,
+      "isHidden": true,
+      "dataShape": {
+        "fieldDefinitions": {
+          "initialScale": {
+            "name": "initialScale",
+            "aspects": {
+              "defaultValue": 1,
+              "friendlyName": "Initial Scale"
+            },
+            "description": "The initial zoom scale when the mashup is loaded for the first time",
+            "baseType": "NUMBER",
+            "ordinal": 0
+          },
+          "heightType": {
+            "name": "heightType",
+            "aspects": {
+              "defaultValue": "device-height",
+              "friendlyName": "Height Type"
+            },
+            "description": "Use the height of the device display, or a custom height (in px)",
+            "baseType": "STRING",
+            "ordinal": 0
+          },
+          "fullScreenMode": {
+            "name": "fullScreenMode",
+            "aspects": {
+              "defaultValue": true,
+              "friendlyName": "Full Screen Mode"
+            },
+            "description": "Open the mashup in full screen mode",
+            "baseType": "BOOLEAN",
+            "ordinal": 0
+          },
+          "minimumScale": {
+            "name": "minimumScale",
+            "aspects": {
+              "defaultValue": 0.1,
+              "friendlyName": "Minimum Scale"
+            },
+            "description": "The minimum scale that users can zoom out to",
+            "baseType": "NUMBER",
+            "ordinal": 0
+          },
+          "disableZoom": {
+            "name": "disableZoom",
+            "aspects": {
+              "defaultValue": false,
+              "friendlyName": "Disable Zoom"
+            },
+            "description": "Disables zooming in and out within the mashup",
+            "baseType": "BOOLEAN",
+            "ordinal": 0
+          },
+          "iosStatusBarAppearance": {
+            "name": "iosStatusBarAppearance",
+            "aspects": {
+              "defaultValue": "black-translucent",
+              "friendlyName": "Status Bar Appearance"
+            },
+            "description": "The style of the iOS status bar",
+            "baseType": "STRING",
+            "ordinal": 0
+          },
+          "width": {
+            "name": "width",
+            "aspects": {
+              "friendlyName": "Width"
+            },
+            "description": "The width of the mashup page",
+            "baseType": "STRING",
+            "ordinal": 0
+          },
+          "maximumScale": {
+            "name": "maximumScale",
+            "aspects": {
+              "defaultValue": 10,
+              "friendlyName": "Maximum Scale"
+            },
+            "description": "The maximum scale that users can zoom out to",
+            "baseType": "NUMBER",
+            "ordinal": 0
+          },
+          "iosShortcutIconTitle": {
+            "name": "iosShortcutIconTitle",
+            "aspects": {
+              "friendlyName": "Shortcut Icon Title"
+            },
+            "description": "A title for the mashup shortcut on the iOS home screen",
+            "baseType": "STRING",
+            "ordinal": 0
+          },
+          "widthType": {
+            "name": "widthType",
+            "aspects": {
+              "defaultValue": "device-width",
+              "friendlyName": "Width Type"
+            },
+            "description": "Use the width of the device display, or a custom width (in px)",
+            "baseType": "STRING",
+            "ordinal": 0
+          },
+          "height": {
+            "name": "height",
+            "aspects": {
+              "friendlyName": "Height"
+            },
+            "description": "The height of the mashup page",
+            "baseType": "STRING",
+            "ordinal": 0
+          }
+        }
+      }
+    }
+  }
+}
