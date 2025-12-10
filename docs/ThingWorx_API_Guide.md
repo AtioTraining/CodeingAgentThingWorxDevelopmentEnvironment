@@ -164,3 +164,40 @@ curl --location --request POST 'http://192.168.20.3:8080/Thingworx/Things/MyNewT
     }
 }'
 ```
+
+### 4.4. Creating a Project
+To create a Project, use a `PUT` request to the `/Projects` collection endpoint.
+
+**Endpoint:** `PUT /Projects`
+
+**cURL Example:**
+```bash
+curl --location --request PUT 'http://192.168.20.3:8080/Thingworx/Projects?Content-Type=application/json' \
+--header 'appKey: <YOUR_APP_KEY>' \
+--header 'Accept: application/json' \
+--header 'Content-Type: application/json' \
+--data '{
+    "entityType": "Projects",
+    "name": "MyNewProject",
+    "description": "A new project",
+    "tags": []
+}'
+```
+
+### 4.5. Assigning Entities to a Project
+When creating an entity (Mashups, Things, etc.), you can assign it to a Project by including the `projectName` property in the main JSON payload.
+
+**Key Property:**
+`"projectName": "<ProjectName>"`
+
+**Example Payload (for Mashup creation):**
+```json
+{
+    "entityType": "Mashups",
+    "name": "MyProjectMashup",
+    "projectName": "MyNewProject", // Assigns this entity to 'MyNewProject'
+    "mashupContent": "..."
+}
+```
+*Note: If `projectName` is omitted, entities are typically assigned to 'PTCDefaultProject' or the system default.*
+
