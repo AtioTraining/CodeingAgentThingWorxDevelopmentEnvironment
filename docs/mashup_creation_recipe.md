@@ -2133,28 +2133,40 @@ When creating service chaining mashups:
 
 ### Overview
 
-Mashup parameters enable mashups to receive input values from external sources (e.g., when embedded in other mashups or opened with URL parameters). Parameters can be created via the REST API, though some configuration options require manual UI setup.
+Mashup parameters enable mashups to receive input values from external sources (e.g., when embedded in other mashups or opened with URL parameters). Parameters can be created via the REST API, though some configuration options require specific property mappings that differ from intuitive naming.
 
-### What Works via REST API ✅
+### Configuration Mappings ✅
 
-- **Parameter Name**: The identifier for the parameter
-- **Base Type**: STRING, INTEGER, BOOLEAN, NUMBER, etc.
-- **Description**: Tooltip text shown in the configuration dialog
-- **Ordinal**: Display order in the parameter list
+Through empirical testing, the following mappings have been established for the German ThingWorx UI:
 
-### Known Limitations ⚠️
+#### 1. "Zu Erinnerungen hinzufügen" (Add to Memories)
+This checkbox in the UI maps to the **`isMandatory`** property in the JSON definition.
+- Checkbox Checked = `isMandatory: "true"`
+- Checkbox Unchecked = `isMandatory: "false"`
 
-The following settings **cannot** be configured via REST API and must be set manually in the ThingWorx Composer UI:
+> [!NOTE]
+> The `isLocalProperty` attribute does **not** control this setting, despite the naming similarity.
 
-- **Binding Direction** (Source/Target/Both)
-- **"Zu Erinnerungen hinzufügen"** checkbox (`isLocalProperty`)
+#### 2. Binding Directions (Bindungsrichtung)
+The mapping between the UI terms and the JSON values is as follows:
+
+| UI Term (German) | UI Meaning | JSON Value |
+|------------------|------------|------------|
+| **Quelle**       | Source     | `"IN"`     |
+| **Ziel**         | Target     | `"OUT"`    |
+| **Beide**        | Both       | `"BOTH"`   |
+
+> [!IMPORTANT]
+> This mapping (`Quelle` -> `IN`, `Ziel` -> `OUT`) appears counter-intuitive but has been verified in practice. "Source" parameters act as Inputs (`IN`) to the Mashup, while "Target" parameters act as Outputs (`OUT`) from the Mashup.
 
 ### Parameter Structure
 
 Parameters must be defined in **two locations** for them to appear in the configuration dialog:
 
 1. **`parameterDefinitions`** - At the mashup entity level
+   - `isMandatory` must be a **String** (`"true"`/`"false"`) here.
 2. **`_currentParameterDefs`** - Inside `mashupContent.UI.Properties`
+   - `isMandatory` must be a **Boolean** (`true`/`false`) here.
 
 ### Complete Example: Adding Parameters to a Mashup
 
@@ -2197,68 +2209,68 @@ async function addMashupParameters() {
     const mashupContent = JSON.parse(mashup.mashupContent);
     
     // Step 2: Define parameters in parameterDefinitions
+    // Note: isMandatory is a STRING here
     mashup.parameterDefinitions = {
         "InputValue": {
             "name": "InputValue",
-            "description": "Input value for the mashup",
+            "description": "Input value (Source/Quelle)",
             "baseType": "INTEGER",
             "ordinal": 0,
             "aspects": {
-                "bindingDirection": "BOTH",
-                "isMandatory": false,
-                "isLocalProperty": true
+                "bindingDirection": "IN",    // Quelle
+                "isMandatory": "true"        // Zu Erinnerungen hinzufügen = CHECKED
             }
         },
-        "FilterText": {
-            "name": "FilterText",
-            "description": "Filter text",
+        "OutputValue": {
+            "name": "OutputValue",
+            "description": "Output value (Target/Ziel)",
             "baseType": "STRING",
             "ordinal": 1,
             "aspects": {
-                "bindingDirection": "SOURCE",
-                "isMandatory": false
+                "bindingDirection": "OUT",   // Ziel
+                "isMandatory": "false"       // Zu Erinnerungen hinzufügen = UNCHECKED
             }
         },
-        "IsEnabled": {
-            "name": "IsEnabled",
-            "description": "",
+        "BiDirValue": {
+            "name": "BiDirValue",
+            "description": "Bidirectional value (Both/Beide)",
             "baseType": "BOOLEAN",
             "ordinal": 2,
             "aspects": {
-                "bindingDirection": "TARGET",
-                "isMandatory": false
+                "bindingDirection": "BOTH",  // Beide
+                "isMandatory": "true"        // Zu Erinnerungen hinzufügen = CHECKED
             }
         }
     };
     
     // Step 3: Add parameters to _currentParameterDefs in mashupContent
+    // Note: isMandatory is a BOOLEAN here
     mashupContent.UI.Properties._currentParameterDefs = [
         {
             "ParameterName": "InputValue",
             "BaseType": "INTEGER",
-            "Description": "Input value for the mashup",
+            "Description": "Input value (Source/Quelle)",
+            "Aspects": {
+                "bindingDirection": "IN",
+                "isMandatory": true
+            }
+        },
+        {
+            "ParameterName": "OutputValue",
+            "BaseType": "STRING",
+            "Description": "Output value (Target/Ziel)",
+            "Aspects": {
+                "bindingDirection": "OUT",
+                "isMandatory": false
+            }
+        },
+        {
+            "ParameterName": "BiDirValue",
+            "BaseType": "BOOLEAN",
+            "Description": "Bidirectional value (Both/Beide)",
             "Aspects": {
                 "bindingDirection": "BOTH",
-                "isMandatory": false,
-                "isLocalProperty": true
-            }
-        },
-        {
-            "ParameterName": "FilterText",
-            "BaseType": "STRING",
-            "Description": "Filter text",
-            "Aspects": {
-                "bindingDirection": "SOURCE",
-                "isMandatory": false
-            }
-        },
-        {
-            "ParameterName": "IsEnabled",
-            "BaseType": "BOOLEAN",
-            "Description": "",
-            "Aspects": {
-                "bindingDirection": "TARGET",
-                "isMandatory": false
+                "isMandatory": true
             }
         }
     ];
@@ -2283,88 +2295,19 @@ async function addMashupParameters() {
         console.error(text);
     } else {
         console.log(`✓ Parameters added successfully!`);
-        console.log(`\nParameters created:`);
-        console.log(`  - InputValue (INTEGER)`);
-        console.log(`  - FilterText (STRING)`);
-        console.log(`  - IsEnabled (BOOLEAN)`);
-        console.log(`\n⚠️ Manual UI configuration required for:`);
-        console.log(`  - Binding directions`);
-        console.log(`  - "Zu Erinnerungen hinzufügen" checkbox`);
     }
 }
 
 addMashupParameters();
 ```
 
-### Parameter Definition Fields
+### Checklist for Success
 
-| Field | Description | Example |
-|-------|-------------|---------|
-| `name` | Parameter identifier | `"InputValue"` |
-| `description` | Tooltip text in UI | `"Input value for the mashup"` |
-| `baseType` | Data type | `"INTEGER"`, `"STRING"`, `"BOOLEAN"` |
-| `ordinal` | Display order (0-based) | `0`, `1`, `2` |
-| `aspects.bindingDirection` | Source/Target/Both ⚠️ | `"BOTH"`, `"SOURCE"`, `"TARGET"` |
-| `aspects.isMandatory` | Required parameter | `false`, `true` |
-| `aspects.isLocalProperty` | Add to memory ⚠️ | `true`, `false` |
-
-> ⚠️ **Note**: `bindingDirection` and `isLocalProperty` can be set via API but are **not applied** by ThingWorx. These must be configured manually in the Composer UI.
-
-### Manual UI Configuration Steps
-
-After creating parameters via the API, configure binding directions in the ThingWorx Composer:
-
-1. Open the mashup in the **Mashup Builder**
-2. Click the **gear icon** (⚙️) in the Explorer to open "Mashup konfigurieren"
-3. For each parameter, set:
-   - **Bindungsrichtung** (Binding Direction):
-     - **Beide** (Both): Parameter can send and receive data
-     - **Quelle** (Source): Parameter can only send data
-     - **Ziel** (Target): Parameter can only receive data
-   - **Zu Erinnerungen hinzufügen** checkbox: Enable to add parameter to memory
-
-### Binding Direction Use Cases
-
-| Direction | Use Case | Example |
-|-----------|----------|---------|
-| **Both** | Parameter needs to send and receive | Counter value that updates externally |
-| **Source** | Mashup provides data to parent | Search results, selected item |
-| **Target** | Mashup receives data from parent | Filter criteria, configuration values |
-
-### Common Pitfalls
-
-> **Parameters Not Visible**: Ensure parameters are defined in **both** `parameterDefinitions` and `_currentParameterDefs`. If only one is set, parameters won't appear in the configuration dialog.
-
-> **Binding Direction Ignored**: The API accepts `bindingDirection` values but ThingWorx doesn't apply them. Always verify and set manually in the UI.
-
-> **Type Mismatch**: Ensure `BaseType` (in `_currentParameterDefs`) matches `baseType` (in `parameterDefinitions`). Case matters: use `"INTEGER"` not `"Integer"`.
-
-### Workflow Summary
-
-1. **Create Parameters via API**
-   - Define in `parameterDefinitions`
-   - Define in `_currentParameterDefs`
-   - Set name, type, description, ordinal
-
-2. **Configure in UI** (Manual)
-   - Open mashup configuration dialog
-   - Set binding direction for each parameter
-   - Enable "Zu Erinnerungen hinzufügen" if needed
-
-3. **Verify**
-   - Parameters appear in configuration dialog
-   - Binding directions are correct
-   - Parameters work when mashup is embedded or opened with URL params
-
-### Checklist
-
-- [ ] Parameters defined in `parameterDefinitions`
-- [ ] Parameters defined in `_currentParameterDefs`
-- [ ] `BaseType` matches `baseType` for each parameter
-- [ ] Ordinal values are sequential (0, 1, 2, ...)
-- [ ] Binding directions set manually in UI
-- [ ] "Zu Erinnerungen hinzufügen" configured if needed
-- [ ] Parameters tested in embedded context or with URL parameters
+- [ ] Use `isMandatory` to control "Zu Erinnerungen hinzufügen" (Persistence).
+- [ ] Use `IN` for "Quelle" (Source) binding direction.
+- [ ] Use `OUT` for "Ziel" (Target) binding direction.
+- [ ] Use `BOTH` for "Beide" (Both) binding direction.
+- [ ] Use **String** values (`"true"`) in `parameterDefinitions` but **Boolean** values (`true`) in `_currentParameterDefs`.
 
 ---
 
